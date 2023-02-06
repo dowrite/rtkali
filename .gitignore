@@ -1,0 +1,6 @@
+# Untracked vagrant files
+.vagrant
+*.box
+
+# Licensed SW
+licensed
