@@ -24,11 +24,17 @@ All Vagrant boxes must have a vagrant account and SSH for Vagrant to work. Once 
   - Disable sshd
 
 # USAGE
-## 1. Download & Install Vagrant
+### 1. Download & Install Vagrant
 https://developer.hashicorp.com/vagrant/downloads/vmware
-## 2. Download & Install Vagrant VMWare Utility
+
+### 2. Download & Install Vagrant VMWare Utility
 https://developer.hashicorp.com/vagrant/downloads/vmware
-## 3. Clone this repo
+
+### 3. Clone this repo
   - Open VS Code
   - Click "Clone Repository"
-  - Copy & paste the repo url
+  - Enter "https://github.com/dowrite/rtkali.git"
+
+### 4. Create VM
+  - `cd rtkali`
+  - `vagrant up`
