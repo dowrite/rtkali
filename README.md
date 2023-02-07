@@ -22,3 +22,13 @@ Once Vagrant provisioning completes and all manual steps are completed as prompt
 All Vagrant boxes must have a vagrant account and SSH for Vagrant to work. Once we are done provisioning with Vagrant, the op-setup.sh script will harden the VM by doing the following:
   - Remove Vagrant account
   - Disable sshd
+
+# USAGE
+## 1. Download & Install Vagrant
+https://developer.hashicorp.com/vagrant/downloads/vmware
+## 2. Download & Install Vagrant VMWare Utility
+https://developer.hashicorp.com/vagrant/downloads/vmware
+## 3. Clone this repo
+  - Open VS Code
+  - Click "Clone Repository"
+  - Copy & paste the repo url
