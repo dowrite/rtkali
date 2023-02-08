@@ -58,11 +58,9 @@ Vagrant.configure("2") do |config|
     unzip "/usr/share/tools/CyberChef_"$CYBERCHEF_VER".zip" -d "/usr/share/tools/CyberChef"
     ln -s "/usr/share/tools/CyberChef/CyberChef_"$CYBERCHEF_VER".html /home/cricket/Desktop/CyberChef.html"
 
-    # Download privesc helper files from github
+    # Download privesc helper scripts from github
     wget -qO "/usr/share/tools/linpeas.sh" https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh
     wget -qO "/usr/share/tools/winPEAS.bat" https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEAS.bat
-    wget -qO "/usr/share/tools/winPEASx64.exe" https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASx64.exe
-    wget -qO "/usr/share/tools/winPEASx86.exe" https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEASx86.exe
 
     # Get the latest RT Arsenal notes
     mkdir -p "/home/cricket/Desktop"
