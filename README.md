@@ -39,3 +39,4 @@ https://developer.hashicorp.com/vagrant/downloads
 ### 4. Create VM
   - `cd rtkali`
   - `vagrant up`
+    - If `vagrant up` times out after creating the VM, run `vagrant provision` to continue provisioning the VM.
