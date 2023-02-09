@@ -44,9 +44,15 @@ echo "### Configuring terminal logging ###"
 mkdir -p /cricket/assessment/termlogs
 chown -R root:root /cricket
 chmod -R 3777 /cricket # 3777 - Anyone can read/write. Only root can delete.
-cp /usr/share/tools/.zshrc /root/.zshrc
-cp /usr/share/tools/.zshrc /home/cricket/.zshrc
 
+if test -f "/usr/share/tools/template.zshrc"; then
+	cp /usr/share/tools/template.zshrc /root/.zshrc
+	cp /usr/share/tools/template.zshrc /home/cricket/.zshrc
+else
+	echo "/usr/share/tools/template.zshrc not found." 
+	echo "Exiting. Op-setup.sh did not complete!"
+	exit
+fi
 
 echo ""
 echo "+------------------------------------------+"
