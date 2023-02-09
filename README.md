@@ -28,8 +28,8 @@ All Vagrant boxes must have a vagrant account and SSH for Vagrant to work. Once 
 https://developer.hashicorp.com/vagrant/downloads
 
 ### 2. Install Vagrant VMWare Utility
-  - `vagrant plugin install vagrant-vmware-desktop`
-  - See: https://developer.hashicorp.com/vagrant/downloads/vmware
+  - Download & Install the driver: https://developer.hashicorp.com/vagrant/downloads/vmware
+  - Install the vagrant plugin `vagrant plugin install vagrant-vmware-desktop`
 
 ### 3. Clone this repo
   - Open VS Code
