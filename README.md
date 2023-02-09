@@ -25,7 +25,7 @@ All Vagrant boxes must have a vagrant account and SSH for Vagrant to work. Once 
 
 # USAGE
 ### 1. Download & Install Vagrant
-https://developer.hashicorp.com/vagrant/downloads/vmware
+https://developer.hashicorp.com/vagrant/downloads
 
 ### 2. Install Vagrant VMWare Utility
   - `vagrant plugin install vagrant-vmware-desktop`
