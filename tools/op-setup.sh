@@ -23,9 +23,6 @@ systemctl disable sshd
 ### Hostname change
 echo
 echo "#### Defining Hostname ####"
-echo "What is the mission name (defined by team lead)?"
-read -p 'Mission name: ' missionname
-echo ""
 echo "What is your 2-digit laptop number?"
 read -p 'Laptop number (##): ' laptopnumber
 newhostname="$missionname-kali$laptopnumber"
@@ -33,27 +30,12 @@ echo "$newhostname" > /etc/hostname
 hostname -b "$newhostname"
 sed -i "s/127.0.1.1.*/127.0.1.1\t$newhostname/g" /etc/hosts
 
-### Change cricket user password
+### Set cricket user password
 echo ""
 echo "### Set password for 'cricket' ###"
 passwd cricket
 
-### Configure logging
-echo ""
-echo "### Configuring terminal logging ###"
-mkdir -p /cricket/assessment/termlogs
-chown -R root:root /cricket
-chmod -R 3777 /cricket # 3777 - Anyone can read/write. Only root can delete.
-
-if test -f "/usr/share/tools/template.zshrc"; then
-	cp /usr/share/tools/template.zshrc /root/.zshrc
-	cp /usr/share/tools/template.zshrc /home/cricket/.zshrc
-else
-	echo "/usr/share/tools/template.zshrc not found." 
-	echo "Exiting. Op-setup.sh did not complete!"
-	exit
-fi
-
+### Remind user of manual steps
 echo ""
 echo "+------------------------------------------+"
 echo "|  MANUAL STEPS - DO NOW                   |"

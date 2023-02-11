@@ -20,11 +20,33 @@ Vagrant.configure("2") do |config|
     vmware.vmx['displayname'] = "RTKali"
   end
 
-  # Install apps & deploy file structure
+  # Prep for provisioning
   config.vm.provision "shell", inline: <<-SHELL
     # Set time zone to UTC
     timedatectl set-timezone UTC
 
+    # Setup RT Folders
+    mkdir -p /usr/share/tools
+    chmod -R 777 /usr/share/tools  # Temporarily open up permissions for provisioning. We change it to 755 later.
+
+    # Create log directory
+    mkdir -p /cricket/terminal_logs
+    chown -R root:root /cricket
+    chmod -R 3777 /cricket # 3777 - Anyone can read/write. Only root can delete.
+    
+  SHELL
+
+  # Copy tools folder from host to VM. 
+  config.vm.provision :file, source: './tools', destination: "/usr/share/tools"
+
+  # Update /etc/skel with our template files
+  config.vm.provision "shell", inline: <<-SHELL
+    cp /usr/share/tools/template.zshrc /etc/skel/.zshrc
+    cp /usr/share/tools/template.zshrc /root/.zshrc # Update /root/.zshrc. The root user was already created using the old file in /etc/skel.
+  SHELL
+  
+  # Install apps & deploy file structure
+  config.vm.provision "shell", inline: <<-SHELL
     # Create 'cricket' user
     useradd -m -s /bin/zsh cricket
     usermod -aG sudo cricket
@@ -38,10 +60,7 @@ Vagrant.configure("2") do |config|
     sudo apt update
     sudo apt install code
 
-    # Setup RT Folders
-    mkdir -p /usr/share/tools
-    chmod -R 777 /usr/share/tools  # Temporarily open up permissions for provisioning. We change it to 755 later.
-
+    
     # Install Caldera into /usr/share/tools
     mkdir -p /usr/share/tools/caldera
     git clone https://github.com/mitre/caldera.git --recursive /usr/share/tools/caldera
@@ -67,9 +86,6 @@ Vagrant.configure("2") do |config|
     wget -qO "/home/cricket/Desktop/RTArsenal.html" "https://rtarsenal.tiddlyhost.com/"
 
   SHELL
-
-  # Copy tools folder from host to VM. 
-  config.vm.provision :file, source: './tools', destination: "/usr/share/tools"
 
   # Install Burpsuite Pro - IF license exists on the host.
   # Since we only have 1 user license, only the designated user will have the burp folder on his host machine.
@@ -111,12 +127,13 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 
-  # Setup operator user environment and permissions
+  # Setup operator user environment and finalize permissions
   config.vm.provision "shell", inline: <<-SHELL
     # Set ownership of cricket tools to the cricket account
     chown -R cricket:cricket /usr/share/tools
     chmod -R 755 /usr/share/tools
     chown -R cricket:cricket /home/cricket
+
 
     # Add reminder to run op setup script 
     cat <<'EOL' >> /home/vagrant/.zshrc
