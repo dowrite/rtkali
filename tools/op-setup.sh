@@ -25,7 +25,7 @@ echo
 echo "#### Defining Hostname ####"
 echo "What is your 2-digit laptop number?"
 read -p 'Laptop number (##): ' laptopnumber
-newhostname="$missionname-kali$laptopnumber"
+newhostname="$kali$laptopnumber"
 echo "$newhostname" > /etc/hostname
 hostname -b "$newhostname"
 sed -i "s/127.0.1.1.*/127.0.1.1\t$newhostname/g" /etc/hosts
