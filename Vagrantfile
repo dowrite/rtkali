@@ -68,8 +68,8 @@ Vagrant.configure("2") do |config|
 
     # TODO 
     # update /usr/share/tools/caldera/conf/local.yml
-    # python3 /usr/share/tools/caldera/server.py --insecure   # Start Caldera Server with default config (./conf/default.yml)
-    # python3 /usr/share/tools/caldera/server.py              # Start Caldera Server with custom config (./conf/local.yml)
+    # cd /usr/share/tools/caldera; python3 server.py --insecure   # Start Caldera Server with default config (./conf/default.yml)
+    # cd /usr/share/tools/caldera; python3 server.py              # Start Caldera Server with custom config (./conf/local.yml)
 
     # Install CyberChef
     CYBERCHEF_VER=$(curl -si https://github.com/gchq/CyberChef/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
