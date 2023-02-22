@@ -65,6 +65,9 @@ Vagrant.configure("2") do |config|
     mkdir -p /usr/share/tools/caldera
     git clone https://github.com/mitre/caldera.git --recursive /usr/share/tools/caldera
     runuser -l cricket -c "pip3 install -r /usr/share/tools/caldera/requirements.txt"
+    # Stage atomics for use with Caldera (data only)
+    mkdir -p /usr/share/tools/atomic-red-team
+    git clone https://github.com/redcanaryco/atomic-red-team.git /usr/share/tools/atomic-red-team
 
     # TODO 
     # update /usr/share/tools/caldera/conf/local.yml
