@@ -39,6 +39,11 @@ Vagrant.configure("2") do |config|
   # Copy tools folder from host to VM. 
   config.vm.provision :file, source: './tools', destination: "/usr/share/tools"
 
+  # Ensure copied files are in unix CRLF format
+  config.vm.provision "shell", inline: <<-SHELL
+    find /usr/share/tools -type f -name "*" -exec dos2unix {} \;
+  SHELL
+
   # Update /etc/skel with our template files
   config.vm.provision "shell", inline: <<-SHELL
     cp /usr/share/tools/template.zshrc /etc/skel/.zshrc
