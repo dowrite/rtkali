@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
 
   # Ensure copied files are in unix CRLF format
   config.vm.provision "shell", inline: <<-SHELL
-    find /usr/share/tools -type f -name "*" -exec dos2unix {} \;
+    find /usr/share/tools -type f -name "*" -exec dos2unix {} \\;
   SHELL
 
   # Update /etc/skel with our template files
