@@ -65,7 +65,12 @@ Vagrant.configure("2") do |config|
     sudo apt update
     sudo apt install code
 
-    
+    # Install xxd
+    sudo apt install xxd
+
+    # Install Ghidra
+    sudo apt install ghidra
+        
     # Install Caldera into /usr/share/tools
     mkdir -p /usr/share/tools/caldera
     git clone https://github.com/mitre/caldera.git --recursive /usr/share/tools/caldera
