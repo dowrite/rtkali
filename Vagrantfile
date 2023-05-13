@@ -58,18 +58,29 @@ Vagrant.configure("2") do |config|
 
     apt update    
     # Install VS Code
-    apt install curl gpg gnupg2 software-properties-common apt-transport-https 
+    apt install -y curl gpg gnupg2 software-properties-common apt-transport-https 
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
     sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
-    sudo apt update
-    sudo apt install code
+    apt update
+    apt install code
 
     # Install xxd
-    sudo apt install xxd
+    apt install -y xxd
 
     # Install Ghidra
-    sudo apt install ghidra
+    apt install -y ghidra
+
+    # Install pymodbus
+    apt install -y python3-pymodbus
+
+    # Install zeek & auxillary tools
+    apt install -y zeek libpcap-dev cmake
+    mkdir -p /usr/share/tools/zeek-aux
+    git clone --recursive https://github.com/zeek/zeek-aux.git /usr/share/tools/zeek-aux
+    chmod +x -R /usr/share/tools/zeek-aux/configure 
+    cd /usr/share/tools/zeek-aux && ./configure && make && sudo make install
+    sudo ln -s /usr/local/zeek/bin/zeek-cut /usr/local/bin
         
     # Install Caldera into /usr/share/tools
     mkdir -p /usr/share/tools/caldera
@@ -79,6 +90,13 @@ Vagrant.configure("2") do |config|
     mkdir -p /usr/share/tools/atomic-red-team
     git clone https://github.com/redcanaryco/atomic-red-team.git /usr/share/tools/atomic-red-team
 
+    # Install pyenv
+    sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl git
+    curl https://pyenv.run | runuser -l cricket -c bash
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/cricket/.zshrc
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/cricket/.zshrc
+    runuser -l cricket -c "pyenv install 2.7.18"
+
     # TODO 
     # update /usr/share/tools/caldera/conf/local.yml
     # cd /usr/share/tools/caldera; python3 server.py --insecure   # Start Caldera Server with default config (./conf/default.yml)
@@ -86,9 +104,9 @@ Vagrant.configure("2") do |config|
 
     # Install CyberChef
     CYBERCHEF_VER=$(curl -si https://github.com/gchq/CyberChef/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
-    wget -qO "/usr/share/tools/CyberChef_"$CYBERCHEF_VER".zip" "https://github.com/gchq/CyberChef/releases/download/"$CYBERCHEF_VER"/CyberChef_"$CYBERCHEF_VER".zip"
-    unzip "/usr/share/tools/CyberChef_"$CYBERCHEF_VER".zip" -d "/usr/share/tools/CyberChef"
-    ln -s "/usr/share/tools/CyberChef/CyberChef_"$CYBERCHEF_VER".html /home/cricket/Desktop/CyberChef.html"
+    wget -qO "/usr/share/tools/CyberChef_$CYBERCHEF_VER.zip" "https://github.com/gchq/CyberChef/releases/download/$CYBERCHEF_VER/CyberChef_$CYBERCHEF_VER.zip"
+    unzip "/usr/share/tools/CyberChef_$CYBERCHEF_VER.zip" -d "/usr/share/tools/CyberChef"
+    ln -s "/usr/share/tools/CyberChef/CyberChef_$CYBERCHEF_VER.html" "/home/cricket/Desktop/CyberChef.html"
 
     # Download privesc helper scripts from github
     wget -qO "/usr/share/tools/linpeas.sh" https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh
@@ -110,9 +128,9 @@ Vagrant.configure("2") do |config|
     BURP_VER=$(curl -si https://portswigger.net/burp/releases/professional/latest | grep -E "^location:" | grep -Eo "[0-9]+.[0-9]+.[0-9]+" | sed 's/-/./g')
 
     # Sample Download Header: GET https://portswigger.net/burp/releases/startdownload?product=pro&version=2022.12.5&type=Linux
-    wget -qO "/usr/share/tools/burpsuite_pro_v"$BURP_VER"_install.sh" "https://portswigger.net/burp/releases/startdownload?product=pro&version="$BURP_VER"&type=Linux"
-    chmod +x "/usr/share/tools/burpsuite_pro_v"$BURP_VER"_install.sh"
-    runuser -l cricket -c "/usr/share/tools/burpsuite_pro_v"$BURP_VER"_install.sh -q"
+    wget -qO "/usr/share/tools/burpsuite_pro_v$BURP_VER_install.sh" "https://portswigger.net/burp/releases/startdownload?product=pro&version=$BURP_VER&type=Linux"
+    chmod +x "/usr/share/tools/burpsuite_pro_v$BURP_VER_install.sh"
+    runuser -l cricket -c "/usr/share/tools/burpsuite_pro_v$BURP_VER_install.sh -q"
 
     # Activate BurpSuite Pro
     # See https://burpsuite.guide/blog/activate-burpsuite-inside-docker-container/
