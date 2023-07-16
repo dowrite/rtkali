@@ -74,6 +74,10 @@ Vagrant.configure("2") do |config|
     # Install pymodbus
     apt install -y python3-pymodbus
 
+    # Install mbtget
+    git clone https://github.com/sourceperl/mbtget.git /usr/share/tools/mbtget
+    cd /usr/share/tools/mbtget && perl Makefile.PL && make && sudo make install
+
     # Install zeek & auxillary tools
     apt install -y zeek libpcap-dev cmake
     mkdir -p /usr/share/tools/zeek-aux
