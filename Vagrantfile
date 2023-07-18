@@ -93,6 +93,10 @@ Vagrant.configure("2") do |config|
     # Stage atomics for use with Caldera (data only)
     mkdir -p /usr/share/tools/atomic-red-team
     git clone https://github.com/redcanaryco/atomic-red-team.git /usr/share/tools/atomic-red-team
+    
+    # Install Sharpshooter
+    git clone https://github.com/mdsecactivebreach/SharpShooter.git /usr/share/tools/SharpShooter
+    runuser -l cricket -c "pip3 install -r /usr/share/tools/SharpShooter/requirements.txt"
 
     # Install pyenv
     sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl git
