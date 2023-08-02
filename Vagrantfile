@@ -114,11 +114,7 @@ Vagrant.configure("2") do |config|
     CYBERCHEF_VER=$(curl -si https://github.com/gchq/CyberChef/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
     wget -qO "/usr/share/tools/CyberChef_$CYBERCHEF_VER.zip" "https://github.com/gchq/CyberChef/releases/download/$CYBERCHEF_VER/CyberChef_$CYBERCHEF_VER.zip"
     unzip "/usr/share/tools/CyberChef_$CYBERCHEF_VER.zip" -d "/usr/share/tools/CyberChef"
-    echo "[Desktop Entry]" >> /home/cricket/Desktop/CyberChef.desktop
-    echo "Type=Link" >> /home/cricket/Desktop/CyberChef.desktop
-    echo "Name=CyberChef" >> /home/cricket/Desktop/CyberChef.desktop
-    echo "URL=file:///usr/share/tools/CyberChef/CyberChef_$CYBERCHEF_VER.html" >> /home/cricket/Desktop/CyberChef.desktop
-    echo "Icon=/usr/share/tools/CyberChef/images/cyberchef-128x128.png" >> /home/cricket/Desktop/CyberChef.desktop
+    echo '<meta http-equiv="refresh" content="0;url=file:///usr/share/tools/CyberChef/CyberChef_$CYBERCHEF_VER.html" />' >> /home/cricket/Desktop/CyberChef.html
 
     # Download privesc helper scripts from github
     wget -qO "/usr/share/tools/linpeas.sh" https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh
