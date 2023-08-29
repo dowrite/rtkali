@@ -78,13 +78,14 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/sourceperl/mbtget.git /usr/share/tools/mbtget
     cd /usr/share/tools/mbtget && perl Makefile.PL && make && sudo make install
 
-    # Install zeek & auxillary tools
-    apt install -y zeek libpcap-dev cmake
+    # Install zeek, zeek tools, ICS Protocol extensions
+    apt install -y zeek zeek-dev libpcap-dev cmake zkg
     mkdir -p /usr/share/tools/zeek-aux
     git clone --recursive https://github.com/zeek/zeek-aux.git /usr/share/tools/zeek-aux
     chmod +x -R /usr/share/tools/zeek-aux/configure 
     cd /usr/share/tools/zeek-aux && ./configure && make && sudo make install
     sudo ln -s /usr/local/zeek/bin/zeek-cut /usr/local/bin
+    
         
     # Install Caldera into /usr/share/tools
     mkdir -p /usr/share/tools/caldera
