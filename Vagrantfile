@@ -99,6 +99,13 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/mdsecactivebreach/SharpShooter.git /usr/share/tools/SharpShooter
     runuser -l cricket -c "pip3 install -r /usr/share/tools/SharpShooter/requirements.txt"
 
+    # Install Bloodhound
+    sudo apt install bloodhound
+    mkdir -p /usr/share/tools/bloodhound/Collectors
+    SHARPHOUND_VER=$(curl -si https://github.com/BloodHoundAD/SharpHound/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
+    wget -qO "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" "https://github.com/BloodHoundAD/SharpHound/releases/download/$SHARPHOUND_VER/SharpHound-$SHARPHOUND_VER.zip"
+    unzip "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" -d "/usr/share/tools/bloodhound/Collectors"
+
     # Install pyenv
     sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl git
     curl https://pyenv.run | runuser -l cricket -c bash
