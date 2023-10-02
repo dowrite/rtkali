@@ -65,6 +65,13 @@ Vagrant.configure("2") do |config|
     apt update
     apt install code
 
+    #Install RustScan
+    apt install -y docker.io
+    systemctl start docker
+    git clone https://github.com/RustScan/RustScan.git
+    cd RustScan/rustscan-debbuilder/ && ./run.sh
+    cd debs && dpkg -i *_amd64.deb
+
     # Install xxd
     apt install -y xxd
 
