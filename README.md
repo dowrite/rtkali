@@ -28,13 +28,13 @@ All Vagrant boxes must have a vagrant account and SSH for Vagrant to work. Once 
   - Removes Vagrant account
   - Disables sshd
 
-# PREREQUISITES
-The following SW must be installed on the host machine before following the installion steps: 
-1. [Vagrant](https://developer.hashicorp.com/vagrant/downloads)
-2. VMWare Workstation Pro or [VMWare Workstation Player](https://www.vmware.com/content/vmware/vmware-published-sites/us/products/workstation-player.html)
-3. [VS Code](https://code.visualstudio.com/download)
-
 # INSTALLATION
+### PREREQUISITES
+The following SW must be installed on the host machine before following the installion steps: 
+  - [Vagrant](https://developer.hashicorp.com/vagrant/downloads)
+  - VMWare Workstation Pro or [VMWare Workstation Player](https://www.vmware.com/content/vmware/vmware-published-sites/us/products/workstation-player.html)
+  - [VS Code](https://code.visualstudio.com/download)
+
 ### 1. Install Vagrant VMWare Utility
   - Download & Install the driver: https://developer.hashicorp.com/vagrant/downloads/vmware
   - Install the vagrant plugin `vagrant plugin install vagrant-vmware-desktop`
