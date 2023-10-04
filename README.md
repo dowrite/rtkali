@@ -1,10 +1,7 @@
 # rtkali
-VagrantFile and supporting resources for customizing Offensive Security's kali-rolling box
+RT Kali gives you a Kali Rolling VM with these additional customizations:
 
-# Why get this
-RT Kali gives you Kali Rolling with these additional customizations.
-
-### Installed FOSS tools:
+### Additional FOSS tools
   - VS Code
   - [Rustscan](https://github.com/RustScan/RustScan)
   - xxd
