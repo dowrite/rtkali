@@ -1,42 +1,54 @@
 # rtkali
 VagrantFile and supporting resources for customizing Offensive Security's kali-rolling box
 
-# Customizations
-Once Vagrant provisioning completes and all manual steps are completed as prompted, the following customizations are in place.
+# Why get this
+RT Kali gives you Kali Rolling with these additional customizations.
 
-### Install FOSS tools:
+### Installed FOSS tools:
   - VS Code
-  - Ghidra
+  - [Rustscan](https://github.com/RustScan/RustScan)
+  - xxd
+  - [Ghidra](https://github.com/NationalSecurityAgency/ghidra)
+  - OT testing tools: mbtget, pymodbus
+  - Zeek
   - Caldera
+  - Windows specific tools: Sharpshooter, Bloodhound
   - CyberChef
   
-### Install & activate the following licensed SW (if license key file is found on Vagrant host):
+### Installed & activated SW (if license key file is found on Vagrant host):
   - BurpSuite
   - Cobalt Strike
   
-### Configure terminal logging
-  - Update terminal prompt to include hostname, IP, date
+### Terminal logging
+  - Updates terminal prompt to include hostname, IP, date
   - Log all terminal input by default
   
 ### Hardening
 All Vagrant boxes must have a vagrant account and SSH for Vagrant to work. Once we are done provisioning with Vagrant, the op-setup.sh script will harden the VM by doing the following:
-  - Remove Vagrant account
-  - Disable sshd
+  - Removes Vagrant account
+  - Disables sshd
 
-# USAGE
-### 1. Download & Install Vagrant
-https://developer.hashicorp.com/vagrant/downloads
+# PREREQUISITES on host machine
+### 1. [Vagrant](https://developer.hashicorp.com/vagrant/downloads)
+### 2. VMWare Workstation Pro or [VMWare Workstation Player](https://www.vmware.com/content/vmware/vmware-published-sites/us/products/workstation-player.html)
+### 3. [VS Code](https://code.visualstudio.com/download)
 
-### 2. Install Vagrant VMWare Utility
+# INSTALLATION
+### 1. Install Vagrant VMWare Utility
   - Download & Install the driver: https://developer.hashicorp.com/vagrant/downloads/vmware
   - Install the vagrant plugin `vagrant plugin install vagrant-vmware-desktop`
 
-### 3. Clone this repo
+### 2. Clone this repo
   - Open VS Code
   - Click "Clone Repository"
   - Enter "https://github.com/dowrite/rtkali.git"
 
-### 4. Create VM
+### 3. Create VM - Type commands in VS Code
   - `cd rtkali`
   - `vagrant up`
-    - If `vagrant up` times out after creating the VM, run `vagrant provision` to continue provisioning the VM.
+    - If `vagrant up` fails at any point after creating the VM, run `vagrant provision` to re-provision the VM.
+
+### 4. Run setup script in RTKali VM
+  - Login to rtkali (default creds: vagrant/vagrant)
+  - Launch Terminal
+  - Follow on-screen prompts
