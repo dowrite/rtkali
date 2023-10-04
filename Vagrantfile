@@ -206,6 +206,6 @@ EOL
   SHELL
 
   # TODO
-  # By default, the Vagrant box has SSH with password disabled. Do we need to change this?
+  # By default, the Vagrant box has SSH with password disabled (only allowing SSH login with a certificate). Do we need to enable passwords for ease of pentesting?
 
 end
