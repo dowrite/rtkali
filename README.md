@@ -41,9 +41,12 @@ The following SW must be installed on the host machine before following the inst
   - Click "Clone Repository"
   - Enter "https://github.com/dowrite/rtkali.git"
 
-### 3. Create VM - Type commands in VS Code
-  - `cd rtkali`
-  - `vagrant up`
+### 3. Create VM
+  - Open Terminal in VS Code. Type the following commands in VS Code's terminal.
+    ```
+    cd rtkali
+    vagrant up
+    ```
     - If `vagrant up` fails at any point after creating the VM, run `vagrant provision` to re-provision the VM.
 
 ### 4. Run setup script in RTKali VM
