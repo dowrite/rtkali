@@ -8,10 +8,8 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "kalilinux/rolling"
 
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  config.vm.network "public_network"
+  # Create a bridged adapter.
+  #config.vm.network "public_network"
 
   # VMWare-specific configuration  
   config.vm.provider :vmware_desktop do |vmware|
@@ -65,12 +63,12 @@ Vagrant.configure("2") do |config|
     apt update
     apt install code
 
-    #Install RustScan
-    apt install -y docker.io
-    systemctl start docker
-    git clone https://github.com/RustScan/RustScan.git
-    cd RustScan/rustscan-debbuilder/ && ./run.sh
-    cd debs && dpkg -i *_amd64.deb
+    #Install RustScan. Commented out because it is a resource hog.
+    #apt install -y docker.io
+    #systemctl start docker
+    #git clone https://github.com/RustScan/RustScan.git
+    #cd RustScan/rustscan-debbuilder/ && ./run.sh
+    #cd debs && dpkg -i *_amd64.deb
 
     # Install xxd
     apt install -y xxd
