@@ -89,7 +89,7 @@ Vagrant.configure("2") do |config|
     git clone --recursive https://github.com/zeek/zeek-aux.git /usr/share/tools/zeek-aux
     chmod +x -R /usr/share/tools/zeek-aux/configure 
     cd /usr/share/tools/zeek-aux && ./configure && make && sudo make install
-    sudo ln -s /usr/local/zeek/bin/zeek-cut /usr/local/bin
+    sudo ln -s /usr/local/zeek/bin/zeek-cut /usr/local/bin/zeek-cut
     
         
     # Install Caldera into /usr/share/tools
