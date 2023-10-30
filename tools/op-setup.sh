@@ -38,12 +38,12 @@ passwd cricket
 ### Remind user of manual steps
 echo ""
 echo "+------------------------------------------+"
-echo "|  MANUAL STEPS - DO NOW                   |"
+echo "|  MANUAL STEPS - DO NOW!!!                |"
 echo "|                                          |"
 echo "|  1. Delete 'vagrant' user                |"
 echo "|     sudo userdel -f vagrant              |"
-echo "|  2. Power off VM                         |"
-echo "|     systemctl poweroff -i                |"
+echo "|  2. Reboot VM                            |"
+echo "|     systemctl reboot -i                  |"
 echo "+------------------------------------------+"
 
 # Switch to cricket user since we're going to delete the vagrant user 
