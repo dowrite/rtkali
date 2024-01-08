@@ -44,8 +44,6 @@ echo "|  1. Delete 'vagrant' user                |"
 echo "|     sudo userdel -f vagrant              |"
 echo "|  2. Power off VM                         |"
 echo "|     systemctl poweroff -i                |"
-echo "|  3. Remove NAT interface                 |"
-echo "|     In VM Settings GUI                   |"
 echo "+------------------------------------------+"
 
 # Switch to cricket user since we're going to delete the vagrant user 

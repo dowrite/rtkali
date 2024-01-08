@@ -54,37 +54,37 @@ Vagrant.configure("2") do |config|
     useradd -m -s /bin/zsh cricket
     usermod -aG sudo cricket
 
-    apt update    
+    apt-get update    
     # Install VS Code
-    apt install -y curl gpg gnupg2 software-properties-common apt-transport-https 
+    apt-get install -y curl gpg gnupg2 software-properties-common apt-transport-https 
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
     sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
-    apt update
-    apt install code
+    apt-get update
+    apt-get install code
 
     #Install RustScan. Commented out because it is a resource hog.
-    #apt install -y docker.io
+    #apt-get install -y docker.io
     #systemctl start docker
     #git clone https://github.com/RustScan/RustScan.git
     #cd RustScan/rustscan-debbuilder/ && ./run.sh
     #cd debs && dpkg -i *_amd64.deb
 
     # Install xxd
-    apt install -y xxd
+    apt-get install -y xxd
 
     # Install Ghidra
-    apt install -y ghidra
+    apt-get install -y ghidra
 
     # Install pymodbus
-    apt install -y python3-pymodbus
+    apt-get install -y python3-pymodbus
 
     # Install mbtget
     git clone https://github.com/sourceperl/mbtget.git /usr/share/tools/mbtget
     cd /usr/share/tools/mbtget && perl Makefile.PL && make && sudo make install
 
     # Install zeek, zeek tools, ICS Protocol extensions
-    apt install -y zeek zeek-dev libpcap-dev cmake zkg
+    apt-get install -y zeek zeek-dev libpcap-dev cmake zkg
     mkdir -p /usr/share/tools/zeek-aux
     git clone --recursive https://github.com/zeek/zeek-aux.git /usr/share/tools/zeek-aux
     chmod +x -R /usr/share/tools/zeek-aux/configure 
@@ -105,14 +105,14 @@ Vagrant.configure("2") do |config|
     runuser -l cricket -c "pip3 install -r /usr/share/tools/SharpShooter/requirements.txt"
 
     # Install Bloodhound
-    sudo apt install bloodhound
+    sudo apt-get install bloodhound
     mkdir -p /usr/share/tools/bloodhound/Collectors
     SHARPHOUND_VER=$(curl -si https://github.com/BloodHoundAD/SharpHound/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
     wget -qO "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" "https://github.com/BloodHoundAD/SharpHound/releases/download/$SHARPHOUND_VER/SharpHound-$SHARPHOUND_VER.zip"
     unzip "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" -d "/usr/share/tools/bloodhound/Collectors"
 
     # Install pyenv
-    sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl git
+    sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl git
     curl https://pyenv.run | runuser -l cricket -c bash
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/cricket/.zshrc
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/cricket/.zshrc
@@ -127,7 +127,8 @@ Vagrant.configure("2") do |config|
     CYBERCHEF_VER=$(curl -si https://github.com/gchq/CyberChef/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
     wget -qO "/usr/share/tools/CyberChef_$CYBERCHEF_VER.zip" "https://github.com/gchq/CyberChef/releases/download/$CYBERCHEF_VER/CyberChef_$CYBERCHEF_VER.zip"
     unzip "/usr/share/tools/CyberChef_$CYBERCHEF_VER.zip" -d "/usr/share/tools/CyberChef"
-    echo '<meta http-equiv="refresh" content="0;url=file:///usr/share/tools/CyberChef/CyberChef_$CYBERCHEF_VER.html" />' > /home/cricket/Desktop/CyberChef.html
+    touch /home/cricket/Desktop/CyberChef.html
+    echo "<meta http-equiv='refresh' content='0;url=file:///usr/share/tools/CyberChef/CyberChef_$CYBERCHEF_VER.html' />" > /home/cricket/Desktop/CyberChef.html
 
     # Download privesc helper scripts from github
     wget -qO "/usr/share/tools/linpeas.sh" https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh
@@ -167,7 +168,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: <<-SHELL
   
     # Install dependencies
-    apt install -y openjdk-11-jdk
+    apt-get install -y openjdk-11-jdk
     update-java-alternatives -s java-1.11.0-openjdk-amd64
 
     # Update
