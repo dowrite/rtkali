@@ -53,6 +53,10 @@ Vagrant.configure("2") do |config|
     # Create 'cricket' user
     useradd -m -s /bin/zsh cricket
     usermod -aG sudo cricket
+    mkdir -p "/home/cricket/Desktop"
+
+    # Get the latest RT Arsenal notes
+    wget -qO "/home/cricket/Desktop/RTArsenal.html" "https://rtarsenal.tiddlyhost.com/"
 
     apt-get update    
     # Install VS Code
@@ -134,9 +138,7 @@ Vagrant.configure("2") do |config|
     wget -qO "/usr/share/tools/linpeas.sh" https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh
     wget -qO "/usr/share/tools/winPEAS.bat" https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEAS.bat
 
-    # Get the latest RT Arsenal notes
-    mkdir -p "/home/cricket/Desktop"
-    wget -qO "/home/cricket/Desktop/RTArsenal.html" "https://rtarsenal.tiddlyhost.com/"
+    
 
   SHELL
 
