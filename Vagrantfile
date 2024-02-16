@@ -57,8 +57,7 @@ Vagrant.configure("2") do |config|
 
     # Get the latest RT Arsenal notes
     wget -qO "/home/cricket/Desktop/RTArsenal.html" "https://rtarsenal.tiddlyhost.com/"
-
-    apt-get update    
+ 
     apt-get update    
     # Install VS Code
     apt-get install -y curl gpg gnupg2 software-properties-common apt-transport-https 
