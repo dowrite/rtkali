@@ -79,6 +79,8 @@ Vagrant.configure("2") do |config|
 
     # Install Ghidra
     apt-get install -y ghidra
+    mkdir -p /home/cricket/ghidra_scripts
+    wget -qO "/home/cricket/ghidra_scripts/Rhabdomancer.java" "https://raw.githubusercontent.com/ax/ghidra-scripts/main/Rhabdomancer.java"
 
     # Install pymodbus
     apt-get install -y python3-pymodbus
