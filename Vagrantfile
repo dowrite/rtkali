@@ -127,6 +127,7 @@ Vagrant.configure("2") do |config|
     # Install pwntools
     runuser -l cricket -c "python -m pip install --upgrade pip"
     runuser -l cricket -c "python -m pip install --upgrade pwntools"
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> /home/cricket/.zshrc
 
     # TODO 
     # update /usr/share/tools/caldera/conf/local.yml
