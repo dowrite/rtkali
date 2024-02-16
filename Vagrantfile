@@ -124,6 +124,10 @@ Vagrant.configure("2") do |config|
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/cricket/.zshrc
     runuser -l cricket -c "pyenv install 2.7.18"
 
+    # Install pwntools
+    runuser -l cricket -c "python -m pip install --upgrade pip"
+    runuser -l cricket -c "python -m pip install --upgrade pwntools"
+
     # TODO 
     # update /usr/share/tools/caldera/conf/local.yml
     # cd /usr/share/tools/caldera; python3 server.py --insecure   # Start Caldera Server with default config (./conf/default.yml)
