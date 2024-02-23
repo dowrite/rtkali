@@ -105,7 +105,12 @@ Vagrant.configure("2") do |config|
     # Stage atomics for use with Caldera (data only)
     mkdir -p /usr/share/tools/atomic-red-team
     git clone https://github.com/redcanaryco/atomic-red-team.git /usr/share/tools/atomic-red-team
-    
+    # TODO 
+      # update /usr/share/tools/caldera/conf/local.yml
+      # cd /usr/share/tools/caldera; python3 server.py --insecure   # Start Caldera Server with default config (./conf/default.yml)
+      # cd /usr/share/tools/caldera; python3 server.py              # Start Caldera Server with custom config (./conf/local.yml)
+
+
     # Install Sharpshooter
     git clone https://github.com/mdsecactivebreach/SharpShooter.git /usr/share/tools/SharpShooter
     runuser -l cricket -c "pip3 install -r /usr/share/tools/SharpShooter/requirements.txt"
@@ -129,10 +134,8 @@ Vagrant.configure("2") do |config|
     runuser -l cricket -c "python -m pip install --upgrade pwntools"
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> /home/cricket/.zshrc
 
-    # TODO 
-    # update /usr/share/tools/caldera/conf/local.yml
-    # cd /usr/share/tools/caldera; python3 server.py --insecure   # Start Caldera Server with default config (./conf/default.yml)
-    # cd /usr/share/tools/caldera; python3 server.py              # Start Caldera Server with custom config (./conf/local.yml)
+    # Install one_gadget
+    gem install one_gadget
 
     # Install CyberChef
     CYBERCHEF_VER=$(curl -si https://github.com/gchq/CyberChef/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
