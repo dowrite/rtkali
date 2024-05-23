@@ -7,9 +7,6 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "kalilinux/rolling"
-  vm.gui = true
-  # Create a bridged adapter.
-  #config.vm.network "public_network"
 
   # VMWare-specific configuration  
   config.vm.provider :vmware_desktop do |vmware|
@@ -66,13 +63,6 @@ Vagrant.configure("2") do |config|
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
     apt-get update
     apt-get install code
-
-    #Install RustScan. Commented out because it is a resource hog.
-    #apt-get install -y docker.io
-    #systemctl start docker
-    #git clone https://github.com/RustScan/RustScan.git
-    #cd RustScan/rustscan-debbuilder/ && ./run.sh
-    #cd debs && dpkg -i *_amd64.deb
 
     # Install xxd
     apt-get install -y xxd
