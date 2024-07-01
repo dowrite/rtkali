@@ -86,8 +86,10 @@ Vagrant.configure("2") do |config|
     chmod +x -R /usr/share/tools/zeek-aux/configure 
     cd /usr/share/tools/zeek-aux && ./configure && make && sudo make install
     sudo ln -s /usr/local/zeek/bin/zeek-cut /usr/local/bin/zeek-cut
-    
-        
+
+    # Install Sliver Framework
+    curl https://sliver.sh/install| bash
+
     # Install Caldera into /usr/share/tools
     mkdir -p /usr/share/tools/caldera
     git clone https://github.com/mitre/caldera.git --recursive /usr/share/tools/caldera
