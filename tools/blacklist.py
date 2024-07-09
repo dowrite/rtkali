@@ -84,17 +84,17 @@ if __name__ == "__main__":
         exit("This script needs root or sudo privileges. Please re-run with sudo")
     # Assign command line args to variables
     ips = args.ip
-    file = args.f
+    filename = args.f
 
     # See if we were passed a file
-    if(file):
+    if(filename):
          # Need to open a file
         try:
-             file1=open(file, 'r')
+             file=open(filename, 'r')
         except:
-             print("Ran into an issue in opening "+file+ ". Please make sure to have provided the full path and that it exists")
+             print("Ran into an issue in opening "+filename+ ". Please make sure to have provided the full path and that it exists")
         while True:
-            line = file1.readline()
+            line = file.readline()
             if not line:
                 break
             # Validate the IP from the file
@@ -103,7 +103,7 @@ if __name__ == "__main__":
             # If we're here, it's valid. Let's block it now
             block_ip(line)
         
-        file1.close()
+        file.close()
     else: 
         # Now need to parse the IPs. IPs, regardless of type, should be seperated by commas (unless only one is provided). Split will handle this regardless 
         ips_split = ips.split(',')
