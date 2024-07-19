@@ -79,6 +79,10 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/sourceperl/mbtget.git /usr/share/tools/mbtget
     cd /usr/share/tools/mbtget && perl Makefile.PL && make && sudo make install
 
+    # Install Redpoint nmap scripts
+    git clone https://github.com/digitalbond/Redpoint.git /usr/share/tools/Redpoint
+    cp /usr/share/tools/Redpoint/*.nse /usr/share/nmap/scripts
+
     # Install zeek, zeek tools, ICS Protocol extensions
     apt-get install -y zeek zeek-dev libpcap-dev cmake zkg
     mkdir -p /usr/share/tools/zeek-aux
