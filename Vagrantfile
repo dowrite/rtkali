@@ -83,6 +83,10 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/digitalbond/Redpoint.git /usr/share/tools/Redpoint
     cp /usr/share/tools/Redpoint/*.nse /usr/share/nmap/scripts
 
+    # Install certmitm
+    git clone https://github.com/aapooksman/certmitm.git
+    cd /usr/share/tools/certmitm && pip install -r requirements.txt
+
     # Install zeek, zeek tools, ICS Protocol extensions
     apt-get install -y zeek zeek-dev libpcap-dev cmake zkg
     mkdir -p /usr/share/tools/zeek-aux
