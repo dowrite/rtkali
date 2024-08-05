@@ -7,9 +7,6 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "kalilinux/rolling"
-  # config.vm.gui = true
-  # Create a bridged adapter.
-  #config.vm.network "public_network"
 
   # VMWare-specific configuration  
   config.vm.provider :vmware_desktop do |vmware|
@@ -67,13 +64,6 @@ Vagrant.configure("2") do |config|
     apt-get update
     apt-get install code
 
-    #Install RustScan. Commented out because it is a resource hog.
-    #apt-get install -y docker.io
-    #systemctl start docker
-    #git clone https://github.com/RustScan/RustScan.git
-    #cd RustScan/rustscan-debbuilder/ && ./run.sh
-    #cd debs && dpkg -i *_amd64.deb
-
     # Install xxd
     apt-get install -y xxd
 
@@ -89,6 +79,14 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/sourceperl/mbtget.git /usr/share/tools/mbtget
     cd /usr/share/tools/mbtget && perl Makefile.PL && make && sudo make install
 
+    # Install Redpoint nmap scripts
+    git clone https://github.com/digitalbond/Redpoint.git /usr/share/tools/Redpoint
+    cp /usr/share/tools/Redpoint/*.nse /usr/share/nmap/scripts
+
+    # Install certmitm
+    git clone https://github.com/aapooksman/certmitm.git
+    cd /usr/share/tools/certmitm && pip install -r requirements.txt
+
     # Install zeek, zeek tools, ICS Protocol extensions
     apt-get install -y zeek zeek-dev libpcap-dev cmake zkg
     mkdir -p /usr/share/tools/zeek-aux
@@ -96,8 +94,10 @@ Vagrant.configure("2") do |config|
     chmod +x -R /usr/share/tools/zeek-aux/configure 
     cd /usr/share/tools/zeek-aux && ./configure && make && sudo make install
     sudo ln -s /usr/local/zeek/bin/zeek-cut /usr/local/bin/zeek-cut
-    
-        
+
+    # Install Sliver Framework
+    curl https://sliver.sh/install| bash
+
     # Install Caldera into /usr/share/tools
     mkdir -p /usr/share/tools/caldera
     git clone https://github.com/mitre/caldera.git --recursive /usr/share/tools/caldera

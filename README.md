@@ -3,10 +3,10 @@ RT Kali gives you a Kali Rolling VM with these additional customizations:
 
 ### Additional FOSS tools
   - VS Code
-  - [Rustscan](https://github.com/RustScan/RustScan)
   - xxd
   - [Ghidra](https://github.com/NationalSecurityAgency/ghidra)
-  - OT testing tools: mbtget, pymodbus
+  - OT testing tools: mbtget, pymodbus, Redpoint
+  - certmitm
   - Zeek
   - Caldera
   - Windows specific tools: Sharpshooter, Bloodhound
