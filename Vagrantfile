@@ -7,7 +7,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "kalilinux/rolling"
-  vm.gui = true
+  # config.vm.gui = true
   # Create a bridged adapter.
   #config.vm.network "public_network"
 
