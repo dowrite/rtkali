@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
     wget -qO "/home/cricket/Desktop/RTArsenal.html" "https://rtarsenal.tiddlyhost.com/"
  
     apt-get update    
-    echo `Installing VS Code...'
+    echo 'Installing VS Code...'
     apt-get install -y curl gpg gnupg2 software-properties-common apt-transport-https 
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
     sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
@@ -64,7 +64,7 @@ Vagrant.configure("2") do |config|
     apt-get update
     apt-get install code
 
-    echo `Installing xxd...'
+    echo 'Installing xxd...'
     apt-get install -y xxd
 
     echo 'Installing feroxbuster...'
@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
     echo 'Installing pymodbus...'
     apt-get install -y python3-pymodbus
 
-    echo `Installing mbtget...'
+    echo 'Installing mbtget...'
     git clone https://github.com/sourceperl/mbtget.git /usr/share/tools/mbtget
     cd /usr/share/tools/mbtget && perl Makefile.PL && make && sudo make install
 
@@ -86,7 +86,7 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/digitalbond/Redpoint.git /usr/share/tools/Redpoint
     cp /usr/share/tools/Redpoint/*.nse /usr/share/nmap/scripts
 
-    echo `Installing certmitm...'
+    echo 'Installing certmitm...'
     git clone https://github.com/aapooksman/certmitm.git
     cd /usr/share/tools/certmitm && pip install -r requirements.txt
 
@@ -114,33 +114,33 @@ Vagrant.configure("2") do |config|
       # cd /usr/share/tools/caldera; python3 server.py              # Start Caldera Server with custom config (./conf/local.yml)
 
 
-    echo `Installing Sharpshooter...'
+    echo 'Installing Sharpshooter...'
     git clone https://github.com/mdsecactivebreach/SharpShooter.git /usr/share/tools/SharpShooter
     runuser -l cricket -c "pip3 install -r /usr/share/tools/SharpShooter/requirements.txt"
 
-    echo `Installing Bloodhound...'
+    echo 'Installing Bloodhound...'
     sudo apt-get install bloodhound
     mkdir -p /usr/share/tools/bloodhound/Collectors
     SHARPHOUND_VER=$(curl -si https://github.com/BloodHoundAD/SharpHound/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
     wget -qO "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" "https://github.com/BloodHoundAD/SharpHound/releases/download/$SHARPHOUND_VER/SharpHound-$SHARPHOUND_VER.zip"
     unzip "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" -d "/usr/share/tools/bloodhound/Collectors"
 
-    echo `Installing pyenv...'
+    echo 'Installing pyenv...'
     sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl git
     curl https://pyenv.run | runuser -l cricket -c bash
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/cricket/.zshrc
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/cricket/.zshrc
     runuser -l cricket -c "pyenv install 2.7.18"
 
-    echo `Installing pwntools...'
+    echo 'Installing pwntools...'
     runuser -l cricket -c "python -m pip install --upgrade pip"
     runuser -l cricket -c "python -m pip install --upgrade pwntools"
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> /home/cricket/.zshrc
 
-    echo `Installing one_gadget...'
+    echo 'Installing one_gadget...'
     gem install one_gadget
 
-    echo `Installing CyberChef...'
+    echo 'Installing CyberChef...'
     CYBERCHEF_VER=$(curl -si https://github.com/gchq/CyberChef/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
     wget -qO "/usr/share/tools/CyberChef_$CYBERCHEF_VER.zip" "https://github.com/gchq/CyberChef/releases/download/$CYBERCHEF_VER/CyberChef_$CYBERCHEF_VER.zip"
     unzip "/usr/share/tools/CyberChef_$CYBERCHEF_VER.zip" -d "/usr/share/tools/CyberChef"
@@ -182,7 +182,7 @@ Vagrant.configure("2") do |config|
   if File.exists?("./tools/licensed/cobaltstrike/license.txt")
     config.vm.provision "shell", inline: <<-SHELL
   
-    echo `Installing dependencies...'
+    echo 'Installing dependencies...'
     apt-get install -y openjdk-11-jdk
     update-java-alternatives -s java-1.11.0-openjdk-amd64
 
