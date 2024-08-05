@@ -7,6 +7,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "kalilinux/rolling"
+  config.vm.box_check_update = TRUE
 
   # VMWare-specific configuration  
   config.vm.provider :vmware_desktop do |vmware|
@@ -55,7 +56,8 @@ Vagrant.configure("2") do |config|
     # Get the latest RT Arsenal notes
     wget -qO "/home/cricket/Desktop/RTArsenal.html" "https://rtarsenal.tiddlyhost.com/"
  
-    apt-get update    
+    apt-get update   
+
     echo 'Installing VS Code...'
     apt-get install -y curl gpg gnupg2 software-properties-common apt-transport-https 
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
