@@ -48,7 +48,7 @@ The following SW must be installed on the host machine before following the inst
     cd rtkali
     vagrant up
     ```
-    - If `vagrant up` fails at any point after creating the VM, run `vagrant provision` to re-provision the VM.
+    - If `vagrant up` fails/stalls at any point after creating the VM, reboot the VM and run `vagrant provision` to re-provision the VM.
 
 ### 4. Run setup script in RTKali VM
   - Login to rtkali (default creds: vagrant/vagrant)
