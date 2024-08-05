@@ -67,6 +67,9 @@ Vagrant.configure("2") do |config|
     # Install xxd
     apt-get install -y xxd
 
+    # Install xxd
+    apt-get install -y feroxbuster
+
     # Install Ghidra
     apt-get install -y ghidra
     mkdir -p /home/cricket/ghidra_scripts
