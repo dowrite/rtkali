@@ -48,10 +48,12 @@ The following SW must be installed on the host machine before following the inst
     cd rtkali
     vagrant up
     ```
+  - While vagrant creates the VM for the first time, run `ctrl + f` in the terminal and do s CASESENSITIVE search for ` E:` to highlight potential issues.
+    
 ### 4. Troubleshoot VM Provisioning
 The first time `vagrant up` is run, the VM is created and `vagrant provision` is automatically run. However, this step is most problematic since we're installing many tools. 
   - If provisioning fails/stalls
-    - Reboot the VM and run `vagrant provision` to re-provision the VM
+    - Reboot the VM and run `vagrant provision`, which re-runs the provisioning scripts
   - If errors continue, force a new download of the `kalilinux/rolling` box:
     ```
     vagrant box remove kalilinux/rolling
