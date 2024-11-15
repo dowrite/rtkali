@@ -88,10 +88,6 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/digitalbond/Redpoint.git /usr/share/tools/Redpoint
     cp /usr/share/tools/Redpoint/*.nse /usr/share/nmap/scripts
 
-    echo 'Installing certmitm...'
-    git clone https://github.com/aapooksman/certmitm.git
-    cd /usr/share/tools/certmitm && pip install -r requirements.txt
-
     # Install zeek, zeek tools, ICS Protocol extensions
     apt-get install -y zeek zeek-dev libpcap-dev cmake zkg
     mkdir -p /usr/share/tools/zeek-aux
@@ -106,7 +102,7 @@ Vagrant.configure("2") do |config|
     # Install Caldera into /usr/share/tools
     mkdir -p /usr/share/tools/caldera
     git clone https://github.com/mitre/caldera.git --recursive /usr/share/tools/caldera
-    runuser -l cricket -c "pip3 install -r /usr/share/tools/caldera/requirements.txt"
+    runuser -l cricket -c "pip install -r /usr/share/tools/caldera/requirements.txt"
     # Stage atomics for use with Caldera (data only)
     mkdir -p /usr/share/tools/atomic-red-team
     git clone https://github.com/redcanaryco/atomic-red-team.git /usr/share/tools/atomic-red-team
@@ -115,10 +111,13 @@ Vagrant.configure("2") do |config|
       # cd /usr/share/tools/caldera; python3 server.py --insecure   # Start Caldera Server with default config (./conf/default.yml)
       # cd /usr/share/tools/caldera; python3 server.py              # Start Caldera Server with custom config (./conf/local.yml)
 
+    echo 'Installing CertMitM...'
+    git clone https://github.com/aapooksman/certmitm.git /usr/share/tools/certmitm
+    runuser -l cricket -c "pip install -r /usr/share/tools/certmitm/requirements.txt"
 
     echo 'Installing Sharpshooter...'
     git clone https://github.com/mdsecactivebreach/SharpShooter.git /usr/share/tools/SharpShooter
-    runuser -l cricket -c "pip3 install -r /usr/share/tools/SharpShooter/requirements.txt"
+    runuser -l cricket -c "pip install -r /usr/share/tools/SharpShooter/requirements.txt"
 
     echo 'Installing Bloodhound...'
     sudo apt-get install bloodhound
