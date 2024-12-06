@@ -96,20 +96,11 @@ Vagrant.configure("2") do |config|
     cd /usr/share/tools/zeek-aux && ./configure && make && sudo make install
     sudo ln -s /usr/local/zeek/bin/zeek-cut /usr/local/bin/zeek-cut
 
-    # Install Sliver Framework
-    curl https://sliver.sh/install| bash
+    echo 'Installing Sliver Framework'
+    curl https://sliver.sh/install | bash
 
-    # Install Caldera into /usr/share/tools
-    mkdir -p /usr/share/tools/caldera
-    git clone https://github.com/mitre/caldera.git --recursive /usr/share/tools/caldera
-    runuser -l cricket -c "pip install -r /usr/share/tools/caldera/requirements.txt"
-    # Stage atomics for use with Caldera (data only)
-    mkdir -p /usr/share/tools/atomic-red-team
-    git clone https://github.com/redcanaryco/atomic-red-team.git /usr/share/tools/atomic-red-team
-    # TODO 
-      # update /usr/share/tools/caldera/conf/local.yml
-      # cd /usr/share/tools/caldera; python3 server.py --insecure   # Start Caldera Server with default config (./conf/default.yml)
-      # cd /usr/share/tools/caldera; python3 server.py              # Start Caldera Server with custom config (./conf/local.yml)
+    echo 'Installing Tuoni'
+    curl https://tuoni.sh | bash
 
     echo 'Installing CertMitM...'
     git clone https://github.com/aapooksman/certmitm.git /usr/share/tools/certmitm
@@ -118,6 +109,9 @@ Vagrant.configure("2") do |config|
     echo 'Installing Sharpshooter...'
     git clone https://github.com/mdsecactivebreach/SharpShooter.git /usr/share/tools/SharpShooter
     runuser -l cricket -c "pip install -r /usr/share/tools/SharpShooter/requirements.txt"
+
+    echo 'Install Git-Dumper'
+    runuser -l cricket -c "pip install git-dumper"
 
     echo 'Installing Bloodhound...'
     sudo apt-get install bloodhound

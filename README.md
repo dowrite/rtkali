@@ -9,7 +9,8 @@ RT Kali gives you a Kali Rolling VM with these additional customizations:
   - OT testing tools: mbtget, pymodbus, Redpoint
   - certmitm
   - Zeek
-  - Caldera
+  - Tuoni
+  - Git-dumper
   - Windows specific tools: Sharpshooter, Bloodhound
   - CyberChef
   
