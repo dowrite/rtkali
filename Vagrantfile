@@ -7,7 +7,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "kalilinux/rolling"
-  config.vm.box_check_update = TRUE
+  config.vm.box_check_update = true
 
   # VMWare-specific configuration  
   config.vm.provider :vmware_desktop do |vmware|
@@ -57,6 +57,7 @@ Vagrant.configure("2") do |config|
     wget -qO "/home/cricket/Desktop/RTArsenal.html" "https://rtarsenal.tiddlyhost.com/"
  
     apt-get update   
+    python -m pip install --break-system-packages --upgrade pip
 
     echo 'Installing VS Code...'
     apt-get install -y curl gpg gnupg2 software-properties-common apt-transport-https 
@@ -80,15 +81,22 @@ Vagrant.configure("2") do |config|
     echo 'Installing pymodbus...'
     apt-get install -y python3-pymodbus
 
+    echo 'Installing pyenv...'
+    apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl git
+    curl https://pyenv.run | runuser -l cricket -c bash
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/cricket/.zshrc
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/cricket/.zshrc
+    # runuser -l cricket -c "pyenv install 2.7.18"
+
     echo 'Installing mbtget...'
     git clone https://github.com/sourceperl/mbtget.git /usr/share/tools/mbtget
     cd /usr/share/tools/mbtget && perl Makefile.PL && make && sudo make install
 
-    # Install Redpoint nmap scripts
+    echo 'Installing Redpoint nmap scripts...'
     git clone https://github.com/digitalbond/Redpoint.git /usr/share/tools/Redpoint
     cp /usr/share/tools/Redpoint/*.nse /usr/share/nmap/scripts
 
-    # Install zeek, zeek tools, ICS Protocol extensions
+    echo 'Installing zeek, zeek tools, ICS Protocol extensions...'
     apt-get install -y zeek zeek-dev libpcap-dev cmake zkg
     mkdir -p /usr/share/tools/zeek-aux
     git clone --recursive https://github.com/zeek/zeek-aux.git /usr/share/tools/zeek-aux
@@ -96,22 +104,31 @@ Vagrant.configure("2") do |config|
     cd /usr/share/tools/zeek-aux && ./configure && make && sudo make install
     sudo ln -s /usr/local/zeek/bin/zeek-cut /usr/local/bin/zeek-cut
 
-    echo 'Installing Sliver Framework'
-    curl https://sliver.sh/install | bash
-
-    echo 'Installing Tuoni'
-    curl https://tuoni.sh | bash
+    echo 'Installing Tuoni...'
+    # Check if the tuoni directory exists
+    if [ ! -d "/usr/share/tools/tuoni" ]; then
+      echo "INFO | Cloning tuoni repository into /usr/share/tools/tuoni ..."
+      mkdir -p /usr/share/tools/tuoni
+      git clone https://github.com/shell-dot/tuoni.git /usr/share/tools/tuoni
+      cd /usr/share/tools/tuoni
+      export TUONI_PASSWORD=changeme
+      export SILENT=1
+      ./tuoni start
+    else
+      echo "INFO | tuoni directory already exists. Updating ..."
+      cd /usr/share/tools/tuoni
+      ./tuoni update-silent
+    fi
 
     echo 'Installing CertMitM...'
     git clone https://github.com/aapooksman/certmitm.git /usr/share/tools/certmitm
-    runuser -l cricket -c "pip install -r /usr/share/tools/certmitm/requirements.txt"
+    runuser -l cricket -c "pip install --break-system-packages -r /usr/share/tools/certmitm/requirements.txt"
 
     echo 'Installing Sharpshooter...'
-    git clone https://github.com/mdsecactivebreach/SharpShooter.git /usr/share/tools/SharpShooter
-    runuser -l cricket -c "pip install -r /usr/share/tools/SharpShooter/requirements.txt"
+    apt-get install -y sharpshooter
 
     echo 'Install Git-Dumper'
-    runuser -l cricket -c "pip install git-dumper"
+    runuser -l cricket -c "pip install --break-system-packages git-dumper"
 
     echo 'Installing Bloodhound...'
     sudo apt-get install bloodhound
@@ -120,16 +137,10 @@ Vagrant.configure("2") do |config|
     wget -qO "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" "https://github.com/BloodHoundAD/SharpHound/releases/download/$SHARPHOUND_VER/SharpHound-$SHARPHOUND_VER.zip"
     unzip "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" -d "/usr/share/tools/bloodhound/Collectors"
 
-    echo 'Installing pyenv...'
-    sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl git
-    curl https://pyenv.run | runuser -l cricket -c bash
-    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/cricket/.zshrc
-    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/cricket/.zshrc
-    runuser -l cricket -c "pyenv install 2.7.18"
+    
 
     echo 'Installing pwntools...'
-    runuser -l cricket -c "python -m pip install --upgrade pip"
-    runuser -l cricket -c "python -m pip install --upgrade pwntools"
+    runuser -l cricket -c "python -m pip install --break-system-packages --upgrade pwntools"
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> /home/cricket/.zshrc
 
     echo 'Installing one_gadget...'
