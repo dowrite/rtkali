@@ -56,8 +56,12 @@ Vagrant.configure("2") do |config|
     # Get the latest RT Arsenal notes
     wget -qO "/home/cricket/Desktop/RTArsenal.html" "https://rtarsenal.tiddlyhost.com/"
  
-    apt-get update   
-    python -m pip install --break-system-packages --upgrade pip
+    apt-get update
+    python -m pip install --upgrade pip
+    apt-get install pipx
+
+    echo 'Installing ansi2html...'
+    pipx install ansi2html
 
     echo 'Installing VS Code...'
     apt-get install -y curl gpg gnupg2 software-properties-common apt-transport-https 
@@ -122,13 +126,14 @@ Vagrant.configure("2") do |config|
 
     echo 'Installing CertMitM...'
     git clone https://github.com/aapooksman/certmitm.git /usr/share/tools/certmitm
-    runuser -l cricket -c "pip install --break-system-packages -r /usr/share/tools/certmitm/requirements.txt"
+    runuser -l cricket -c "pip install -r /usr/share/tools/certmitm/requirements.txt"
+
+    echo 'Install Git-Dumper'
+    runuser -l cricket -c "pipx install git-dumper"
 
     echo 'Installing Sharpshooter...'
     apt-get install -y sharpshooter
 
-    echo 'Install Git-Dumper'
-    runuser -l cricket -c "pip install --break-system-packages git-dumper"
 
     echo 'Installing Bloodhound...'
     sudo apt-get install bloodhound
@@ -140,7 +145,7 @@ Vagrant.configure("2") do |config|
     
 
     echo 'Installing pwntools...'
-    runuser -l cricket -c "python -m pip install --break-system-packages --upgrade pwntools"
+    runuser -l cricket -c "pipx install pwntools"
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> /home/cricket/.zshrc
 
     echo 'Installing one_gadget...'
