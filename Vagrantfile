@@ -124,6 +124,9 @@ Vagrant.configure("2") do |config|
       ./tuoni update-silent
     fi
 
+    echo 'Installing MitM6...'
+    pip install mitm6
+
     echo 'Installing CertMitM...'
     git clone https://github.com/aapooksman/certmitm.git /usr/share/tools/certmitm
     runuser -l cricket -c "pip install -r /usr/share/tools/certmitm/requirements.txt"
