@@ -74,6 +74,9 @@ Vagrant.configure("2") do |config|
     echo 'Installing xxd...'
     apt-get install -y xxd
 
+    echo 'Installing gdb...'
+    apt-get install -y gdb
+
     echo 'Installing feroxbuster...'
     apt-get install -y feroxbuster
 
