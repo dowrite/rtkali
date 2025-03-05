@@ -101,8 +101,8 @@ configure_prompt() {
     #[ "$EUID" -eq 0 ] && prompt_symbol=💀
     case "$PROMPT_ALTERNATIVE" in
         twoline)
-            IP_ADDR=`ip -4 addr show eth0 | grep -oP "(?<=inet\s)\d+(\.\d+){3}"`
-            PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)}|'$IP_ADDR$'|%D{%Y%m%dT%H:%M:%S%Z})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+            IP_ADDR=`ip -4 addr show eth0 | grep -oP "(?<=inet\s)\d+(\.\d+){3}" | sed ':a;N;$!ba;s/\n/+/g'`
+            PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%D{%Y%m%dT%H:%M:%S%Z}|'$IP_ADDR$'|%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
             # Right-side prompt with exit codes and background processes
             #RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
             ;;
@@ -263,12 +263,48 @@ if [ -f /etc/zsh_command_not_found ]; then
 fi
 
 #Script to Record the User's Terminal Session
-if [ "x$session_record" = "x" ]
-then
-timestamp=`date "+%F@%T%Z"`
-output=/cricket/terminal_logs/session.$USER.$$.$timestamp
-session_record=started
-export session_record
-script -f -q 2>${output}.timing $output
-exit
-fi
+log_file="/cricket/terminal_logs/terminal_log.laptop$(hostname)"
+
+
+# Function to log the command, its output, the current user, current directory, and the prompt
+log_command_and_output() {
+  local cmd="$1"
+  local output="$2"
+  local timestamp
+  local user
+  local cwd
+  local ip_addr
+  timestamp=$(date -u "+%Y%m%dT%H:%M:%SZ")
+  user=$(whoami)  # Get the current username
+  cwd=$(pwd)      # Get the current working directory
+  ip_addr=$(ip -4 addr show eth0 | grep -oP "(?<=inet\s)\d+(\.\d+){3}" | sed ':a;N;$!ba;s/\n/+/g')
+
+  # Append the command, its output, timestamp, user, cwd, and prompt to the log file
+  echo -e "\n($timestamp|$ip_addr|$user) - [$cwd]\nCommand: $cmd\nOutput:\n$output" >> "$log_file"
+}
+
+# Pre-command hook: Run before each command executes
+preexec() {
+  # Capture the command to be run
+  cmd="$1"
+  
+  # Use preexec to capture the command and its output
+  # Log the command and output after execution
+  log_command_and_output "$cmd" "$(eval $cmd)"
+}
+
+# Pre-prompt hook: Run after the command finishes (this can be used for additional logging)
+precmd() {
+  # Optional: you can use this hook to log final output for long-running commands
+  return
+}
+
+
+
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+if [ -f "/usr/share/tools/tuoni/scripts/tuoni-autocomplete.sh" ]; then source "/usr/share/tools/tuoni/scripts/tuoni-autocomplete.sh"; fi # Tuoni Autocomplete Script
+export PATH="$PATH:/usr/share/tools/tuoni" # Tuoni Script Path
