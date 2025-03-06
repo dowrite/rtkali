@@ -262,42 +262,53 @@ if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
 
-#Script to Record the User's Terminal Session
+# Script to Record the User's Terminal Session
 log_file="/cricket/terminal_logs/terminal_log.laptop$(hostname)"
 
-
-# Function to log the command, its output, the current user, current directory, and the prompt
+# Function to log the command, its output, and system info
 log_command_and_output() {
-  local cmd="$1"
-  local output="$2"
-  local timestamp
-  local user
-  local cwd
-  local ip_addr
-  timestamp=$(date -u "+%Y%m%dT%H:%M:%SZ")
-  user=$(whoami)  # Get the current username
-  cwd=$(pwd)      # Get the current working directory
-  ip_addr=$(ip -4 addr show eth0 | grep -oP "(?<=inet\s)\d+(\.\d+){3}" | sed ':a;N;$!ba;s/\n/+/g')
+  local start_timestamp end_timestamp duration user cwd ip_addr last_cmd last_status output
 
-  # Append the command, its output, timestamp, user, cwd, and prompt to the log file
-  echo -e "\n($timestamp|$ip_addr|$user) - [$cwd]\nCommand: $cmd\nOutput:\n$output" >> "$log_file"
+  end_timestamp=$(date -u "+%Y%m%dT%H:%M:%SZ")  # Capture completion time
+  duration=$(( $(date -u +%s) - START_TIME ))  # Calculate execution time in seconds
+
+  user=$(whoami)   # Get the current username
+  cwd=$(pwd)       # Get the current working directory
+  ip_addr=$(ip -4 addr show eth0 | grep -oP "(?<=inet\s)\d+(\.\d+){3}" | paste -sd+ -)  # Get all IPv4 addresses
+
+  last_cmd="$SAVED_CMD"      # Retrieve the saved command
+  last_status="$EXIT_STATUS" # Retrieve the saved exit status
+
+  # Capture the last command's output
+  if [[ -s "/tmp/cmd_output.$$" ]]; then
+    output=$(cat "/tmp/cmd_output.$$")
+  else
+    output="(No Output)"
+  fi
+
+  # Append everything to the log file
+  echo -e "\n(Started: $START_TIMESTAMP | Ended: $end_timestamp | Duration: ${duration}s | $ip_addr | $user) - [$cwd]\nCommand: $last_cmd (Exit: $last_status)\nOutput:\n$output" >> "$log_file"
+
+  # Cleanup temporary output file
+  rm -f "/tmp/cmd_output.$$"
 }
 
-# Pre-command hook: Run before each command executes
+# Pre-command hook: Runs before a command executes
 preexec() {
-  # Capture the command to be run
-  cmd="$1"
-  
-  # Use preexec to capture the command and its output
-  # Log the command and output after execution
-  log_command_and_output "$cmd" "$(eval $cmd)"
+  export START_TIMESTAMP=$(date -u "+%Y%m%dT%H:%M:%SZ")  # Store command start time
+  export START_TIME=$(date -u +%s)  # Store start time in seconds for duration calculation
+  export SAVED_CMD="$1"  # Store the command before execution
+
+  # Redirect both stdout & stderr to a temporary file to capture command output
+  exec > >(tee "/tmp/cmd_output.$$") 2>&1
 }
 
-# Pre-prompt hook: Run after the command finishes (this can be used for additional logging)
+# Post-command hook: Runs after a command finishes
 precmd() {
-  # Optional: you can use this hook to log final output for long-running commands
-  return
+  EXIT_STATUS=$?  # Store the last command's exit status
+  log_command_and_output  # Log everything
 }
+
 
 
 
