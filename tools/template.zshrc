@@ -287,7 +287,7 @@ log_command_and_output() {
   fi
 
   # Append everything to the log file
-  echo -e "\n(Started: $START_TIMESTAMP | Ended: $end_timestamp | Duration: ${duration}s | $ip_addr | $user) - [$cwd]\nCommand: $last_cmd (Exit: $last_status)\nOutput:\n$output" >> "$log_file"
+  echo -e "\n(Start: $START_TIMESTAMP | End: $end_timestamp | Dur: ${duration}s | $ip_addr | $user) - [$cwd]\nCmd: $last_cmd\nOutput:\n$output" >> "$log_file"
 
   # Cleanup temporary output file
   rm -f "/tmp/cmd_output.$$"
