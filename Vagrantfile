@@ -144,7 +144,7 @@ Vagrant.configure("2") do |config|
     echo 'Installing Bloodhound...'
     sudo apt-get install bloodhound
     mkdir -p /usr/share/tools/bloodhound/Collectors
-    SHARPHOUND_VER=$(curl -si https://github.com/BloodHoundAD/SharpHound/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
+    SHARPHOUND_VER=$(curl -siL https://github.com/BloodHoundAD/SharpHound/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
     wget -qO "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" "https://github.com/BloodHoundAD/SharpHound/releases/download/$SHARPHOUND_VER/SharpHound-$SHARPHOUND_VER.zip"
     unzip "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" -d "/usr/share/tools/bloodhound/Collectors"
 
@@ -158,7 +158,7 @@ Vagrant.configure("2") do |config|
     gem install one_gadget
 
     echo 'Installing CyberChef...'
-    CYBERCHEF_VER=$(curl -si https://github.com/gchq/CyberChef/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
+    CYBERCHEF_VER=$(curl -siL https://github.com/gchq/CyberChef/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
     wget -qO "/usr/share/tools/CyberChef_$CYBERCHEF_VER.zip" "https://github.com/gchq/CyberChef/releases/download/$CYBERCHEF_VER/CyberChef_$CYBERCHEF_VER.zip"
     unzip "/usr/share/tools/CyberChef_$CYBERCHEF_VER.zip" -d "/usr/share/tools/CyberChef"
     touch /home/cricket/Desktop/CyberChef.html
@@ -179,7 +179,7 @@ Vagrant.configure("2") do |config|
   
     # Download Burpsuite Pro
     # Get latest version
-    BURP_VER=$(curl -si https://portswigger.net/burp/releases/professional/latest | grep -E "^location:" | grep -Eo "[0-9]+.[0-9]+.[0-9]+" | sed 's/-/./g')
+    BURP_VER=$(curl -siL https://portswigger.net/burp/releases/professional/latest | grep -E "^location:" | grep -Eo "[0-9]+.[0-9]+.[0-9]+" | sed 's/-/./g')
 
     # Sample Download Header: GET https://portswigger.net/burp/releases/startdownload?product=pro&version=2022.12.5&type=Linux
     wget -qO "/usr/share/tools/burpsuite_pro_v$BURP_VER_install.sh" "https://portswigger.net/burp/releases/startdownload?product=pro&version=$BURP_VER&type=Linux"
