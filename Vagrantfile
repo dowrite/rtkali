@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
  
     apt-get update
     python -m pip install --upgrade pip
-    apt-get install pipx
+    apt-get install -y pipx
 
     echo 'Installing ansi2html...'
     pipx install ansi2html
@@ -69,7 +69,7 @@ Vagrant.configure("2") do |config|
     sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
     apt-get update
-    apt-get install code
+    apt-get install -y code
 
     echo 'Installing xxd...'
     apt-get install -y xxd
