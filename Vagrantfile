@@ -142,7 +142,7 @@ Vagrant.configure("2") do |config|
 
 
     echo 'Installing Bloodhound...'
-    sudo apt-get install bloodhound
+    apt-get install -y bloodhound
     mkdir -p /usr/share/tools/bloodhound/Collectors
     SHARPHOUND_VER=$(curl -siL https://github.com/BloodHoundAD/SharpHound/releases/latest | grep -E "^location:" | grep -Eo "v[0-9]+.[0-9]+.[0-9]+")
     wget -qO "/usr/share/tools/SharpHound-$SHARPHOUND_VER.zip" "https://github.com/BloodHoundAD/SharpHound/releases/download/$SHARPHOUND_VER/SharpHound-$SHARPHOUND_VER.zip"
