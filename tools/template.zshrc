@@ -309,10 +309,6 @@ precmd() {
   log_command_and_output  # Log everything
 }
 
-
-
-
-
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
