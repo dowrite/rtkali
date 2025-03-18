@@ -159,7 +159,7 @@ Vagrant.configure("2") do |config|
 
     
 
-    echo '========= Installing pwntools ========='
+    echo '========= Installing pwntools (be very patient) ========='
     runuser -l cricket -c "pipx install pwntools"
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> /home/cricket/.zshrc
 
