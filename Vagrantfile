@@ -137,11 +137,11 @@ Vagrant.configure("2") do |config|
     fi
 
     echo '========= Installing MitM6 ========='
-    pip install mitm6
+    pipx install mitm6
 
     echo '========= Installing CertMitM ========='
     git clone https://github.com/aapooksman/certmitm.git /usr/share/tools/certmitm
-    runuser -l cricket -c "pip install -r /usr/share/tools/certmitm/requirements.txt"
+    runuser -l cricket -c "pipx install -r /usr/share/tools/certmitm/requirements.txt"
 
     echo 'Install Git-Dumper'
     runuser -l cricket -c "pipx install git-dumper"
