@@ -72,9 +72,6 @@ Vagrant.configure("2") do |config|
     touch /home/cricket/Desktop/CyberChef.html
     echo "<meta http-equiv='refresh' content='0;url=file:///usr/share/tools/CyberChef/CyberChef_$CYBERCHEF_VER.html' />" > /home/cricket/Desktop/CyberChef.html
 
-    echo '========= Installing ansi2html ========='
-    pipx install ansi2html
-
     echo '========= Installing VS Code ========='
     apt-get install -y curl gpg gnupg2 software-properties-common apt-transport-https 
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
@@ -177,7 +174,7 @@ Vagrant.configure("2") do |config|
   if File.exists?("./tools/licensed/burp/prefs.xml")
     config.vm.provision "shell", inline: <<-SHELL
   
-    echo '==========Installing Burpsuite Pro ========='
+    echo '========== Installing Burpsuite Pro ========='
     # Download latest version
     BURP_VER=$(curl -siL https://portswigger.net/burp/releases/professional/latest | grep -E "^location:" | grep -Eo "[0-9]+.[0-9]+.[0-9]+" | sed 's/-/./g')
 
