@@ -137,7 +137,7 @@ Vagrant.configure("2") do |config|
     fi
 
     echo '========= Installing MitM6 ========='
-    pipx install mitm6
+    apt-get -y install mitm6
 
     echo '========= Installing CertMitM ========='
     git clone https://github.com/aapooksman/certmitm.git /usr/share/tools/certmitm
