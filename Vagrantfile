@@ -85,6 +85,8 @@ Vagrant.configure("2") do |config|
 
     echo '========= Installing gdb ========='
     apt-get install -y gdb
+    git clone https://github.com/pwndbg/pwndbg.git /usr/share/tools/pwngdb
+    cd /usr/share/tools/pwngdb && runuser -l cricket -c "./setup.sh"
 
     echo '========= Installing feroxbuster ========='
     apt-get install -y feroxbuster
@@ -102,7 +104,7 @@ Vagrant.configure("2") do |config|
     curl https://pyenv.run | runuser -l cricket -c bash
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/cricket/.zshrc
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/cricket/.zshrc
-    # runuser -l cricket -c "pyenv install 2.7.18"
+
 
     echo '========= Installing mbtget ========='
     git clone https://github.com/sourceperl/mbtget.git /usr/share/tools/mbtget
