@@ -49,19 +49,20 @@ Vagrant.configure("2") do |config|
   # Install apps & deploy file structure
   config.vm.provision "shell", inline: <<-SHELL
 
-    # Create 'cricket' user
+    echo "Creating 'cricket' user"
     useradd -m -s /bin/zsh cricket
     usermod -aG sudo cricket
     mkdir -p "/home/cricket/Desktop"
 
+    curl -fsSL https://archive.kali.org/archive-key.asc | gpg --dearmor | sudo tee /usr/share/keyrings/kali-archive-keyring.gpg > /dev/null
     apt-get update
-    python -m pip install --upgrade pip
+    # python -m pip install --upgrade pip
     apt-get install -y pipx
 
-    # Get the latest RT Arsenal notes
+    echo "Getting the latest RT Arsenal notes"
     wget -qO "/home/cricket/Desktop/RTArsenal.html" "https://rtarsenal.tiddlyhost.com/"
 
-    # Download privesc helper scripts from github
+    echo "Downloading privesc helper scripts from github"
     wget -qO "/usr/share/tools/linpeas.sh" https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh
     wget -qO "/usr/share/tools/winPEAS.bat" https://github.com/carlospolop/PEASS-ng/releases/latest/download/winPEAS.bat
 
@@ -85,8 +86,8 @@ Vagrant.configure("2") do |config|
 
     echo '========= Installing gdb ========='
     apt-get install -y gdb
-    git clone https://github.com/pwndbg/pwndbg.git /usr/share/tools/pwngdb
-    cd /usr/share/tools/pwngdb && runuser -l cricket -c "./setup.sh"
+    git clone https://github.com/pwndbg/pwndbg.git /usr/share/tools/pwndbg
+    cd /usr/share/tools/pwndbg && runuser -l cricket -c "./setup.sh"
 
     echo '========= Installing feroxbuster ========='
     apt-get install -y feroxbuster
