@@ -174,7 +174,7 @@ Vagrant.configure("2") do |config|
 
   # Install Burpsuite Pro - IF license exists on the host.
   # Since we only have 1 user license, only the designated user will have the burp folder on his host machine.
-  if File.exists?("./tools/licensed/burp/prefs.xml")
+  if File.exist?("./tools/licensed/burp/prefs.xml")
     config.vm.provision "shell", inline: <<-SHELL
   
     echo '========== Installing Burpsuite Pro ========='
@@ -200,7 +200,7 @@ Vagrant.configure("2") do |config|
 
   # Install Cobalt Strike - IF license exists on the host.
   # Since we only have 1 user license, only the designated user will have the cobaltstrike folder on his host machine.
-  if File.exists?("./tools/licensed/cobaltstrike/license.txt")
+  if File.exist?("./tools/licensed/cobaltstrike/license.txt")
     config.vm.provision "shell", inline: <<-SHELL
   
     echo '========= Installing Cobalt Strike ========='
