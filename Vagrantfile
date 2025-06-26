@@ -144,7 +144,7 @@ Vagrant.configure("2") do |config|
 
     echo '========= Installing CertMitM ========='
     git clone https://github.com/aapooksman/certmitm.git /usr/share/tools/certmitm
-    runuser -l cricket -c "pipx install -r /usr/share/tools/certmitm/requirements.txt"
+    runuser -l cricket -c "pip install -r /usr/share/tools/certmitm/requirements.txt --break-system-packages"
 
     echo 'Install Git-Dumper'
     runuser -l cricket -c "pipx install git-dumper"
